@@ -1,4 +1,3 @@
-from unittest import __main__
 
 from flask import Flask
 

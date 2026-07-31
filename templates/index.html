@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Index sahifa {% endblock %}
+
+{% block content %}
+    <ul>
+        {% for item in text %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul> 
+    <p>{{result}}</p>
+    <p>{{ text }}</p>
+    <p>this one below is a filtering thing!</p>
+    <p>{{text|reversed_string}}</p>
+    <p>below david malan's input example</p>
+    <form action="/greet" method="GET">
+        <input autocomplete="off" autofocus name="nom" placeholder="Ism" type="text">
+        <button type="submit">Greet</button>
+    </form>
+
+{% endblock %}

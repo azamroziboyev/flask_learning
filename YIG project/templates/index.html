@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+    <title>{% block title %}YOUTUBE VIDEO INFO GETTER{% endblock %}</title>
+    
+    <!-- Google Font -->
+     {% block font %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    {% endblock %}
+    <!-- Flask Jinja2 CSS URL -->
+     {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    {% endblock %}
+
+{% block body %}
+
+    <!-- Main Centered Application Container -->
+    <main class="app-viewport">
+
+        <!-- Input Box & GET Button Section -->
+        <section class="input-section">
+            <div class="input-wrapper">
+                
+                <!-- Editable URL Field -->
+                <input 
+                    type="text" 
+                    id="urlInputField" 
+                    class="paste-input" 
+                    placeholder="Paste here" 
+                    autocomplete="off" 
+                    spellcheck="false"
+                    autofocus
+                />
+
+                <!-- Light Blue GET Button -->
+                <button type="button" id="getActionButton" class="get-btn hidden">
+                    GET
+                </button>
+
+            </div>
+        </section>
+
+        <!-- Dynamic Output Result Box Section -->
+        <section id="resultCardBox" class="result-card hidden">
+            <!-- Header Badge -->
+            <div class="card-header">
+                <span class="ai-badge">AI Response</span>
+            </div>
+
+            <!-- ChatGPT Style Streaming Content Box -->
+            <div id="streamTextContent" class="stream-content"></div>
+        </section>
+
+    </main>
+
+    <!-- Flask Jinja2 JS URL -->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

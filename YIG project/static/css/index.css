@@ -1,0 +1,227 @@
+/* ===========================
+   Variables & Theme Setup
+=========================== */
+:root {
+    /* Och sarg'ish (cream) sahifa foni */
+    --page-bg: #f9f6f0; 
+    
+    /* Result kartasi va matn ranglari */
+    --card-bg: #ffffff;
+    --text-primary: #2d3748;
+    --text-muted: rgba(0, 0, 0, 0.22);
+    
+    /* Och ko'k rangdagi GET tugmasi */
+    --btn-blue: #38bdf8;
+    --btn-blue-hover: #0284c7;
+    --btn-glow: rgba(56, 189, 248, 0.3);
+
+    /* Yumshoq soya effektlari */
+    --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===========================
+   Layout & Smooth Centering
+=========================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--page-bg);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* App konteynerining balandlik o'zgarishi va joyiga ravon qaytishi */
+.app-viewport {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    
+    /* Karta paydo bo'lganda/yo'qolganda joylashuv silliq va asta-sekin o'zgarishi uchun */
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                margin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===========================
+   Editable Input & Blinking Cursor
+=========================== */
+.input-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* Input qismining o'zi ham o'z joyiga ravon qaytishi uchun transition */
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Nisbiy konteyner - GET tugmasi absolyut joylashuvi uchun */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 520px;
+}
+
+/* "Paste here" input field va qora miltillovchi kursor */
+.paste-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    
+    width: 380px;
+    text-align: center;
+    padding: 10px 16px;
+    
+    /* Kursor rangi qora qilib belgilandi */
+    caret-color: #000000;
+    
+    transition: color 0.3s ease;
+}
+
+/* Placeholder uslubi */
+.paste-input::placeholder {
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* Placeholder turganida yozuv oldiga miltillovchi qora kursor animatsiyasini qo'llash */
+.paste-input:placeholder-shown {
+    animation: blinkCursor 1s infinite;
+}
+
+/* Miltillovchi kursor animatsiyasi */
+@keyframes blinkCursor {
+    0%, 100% {
+        caret-color: #000000;
+    }
+    50% {
+        caret-color: transparent;
+    }
+}
+
+/* ===========================
+   Absolute Positioned GET Button
+=========================== */
+.get-btn {
+    position: absolute;
+    right: 0;
+    background-color: var(--btn-blue);
+    color: #ffffff;
+    border: none;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--btn-glow);
+    
+    opacity: 0;
+    transform: scale(0.9) translateX(10px);
+    pointer-events: none;
+    
+    transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.2s ease;
+}
+
+.get-btn.visible {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+    pointer-events: auto;
+}
+
+.get-btn:hover {
+    background-color: var(--btn-blue-hover);
+    transform: translateY(-1px);
+}
+
+.get-btn:active {
+    transform: scale(0.96);
+}
+
+/* ===========================
+   Result Card & Smooth Animations
+=========================== */
+.result-card {
+    width: 100%;
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+    /* 0.5s o'lcham va joylashuv ravonligi */
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(4px);
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Karta to'liq ko'ringanda o'z o'lchamini silliq egallaydi */
+.result-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+    max-height: 500px;
+    padding: 28px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+}
+
+.ai-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--btn-blue-hover);
+    background-color: rgba(56, 189, 248, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.stream-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 48px;
+}
+
+/* ===========================
+   Utilities
+=========================== */
+.hidden {
+    display: none !important;
+}

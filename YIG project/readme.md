@@ -1,7 +1,8 @@
-HELLO
+WELCOME TO THE YIG PROJECT
+
 
 ```markdown
-# 🎬 YouTube Video Metadata Visualizer
+# 🎬 YouTube Video Information Getter
 
 A responsive, asynchronous Flask web application that extracts and displays YouTube video metadata (thumbnails, statistics, channel info, and descriptions) featuring a real-time ChatGPT-style typewriter text effect and adaptive UI transitions.
 

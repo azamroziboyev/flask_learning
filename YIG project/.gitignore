@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# Environment Variables (Maxfiy kalitlar)
+.env
+
+# IDE va Editor sozlamalari
+.vscode/
+.idea/

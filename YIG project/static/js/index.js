@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const getActionButton = document.getElementById("getActionButton");
     const resultCardBox = document.getElementById("resultCardBox");
     const streamTextContent = document.getElementById("streamTextContent");
+    const videoThumbnail = document.getElementById("videoThumbnail");
 
     // Dynamic stream interval & animation timer references
     let activeStreamInterval = null;
@@ -83,7 +84,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (activeStreamInterval) clearInterval(activeStreamInterval);
         if (cardAppearanceTimeout) clearTimeout(cardAppearanceTimeout);
 
+        // Eski ma'lumotlarni tozalash
         streamTextContent.textContent = "";
+        videoThumbnail.src = "";
+        videoThumbnail.classList.add("hidden");
         
         // Step 1: Box va uning joylashuvi 0.5s davomida ravon paydo bo'ladi
         resultCardBox.classList.remove("hidden");
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const targetUrl = urlInputField.value.trim();
 
         try {
-            // Flask backend'ingizga so'rov yuboramiz va to'liq matnni olamiz
+            // Flask backend'ingizga so'rov yuboramiz va to'liq matn hamda thumbnail'ni olamiz
             const response = await fetch('/get-summary', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -104,11 +108,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
             const fullTextFromFlask = data.result; // Flask qaytargan tayyor matn
+            const thumbnailUrl = data.thumbnail;    // Flask qaytargan rasm URL'i
+
+            // Thumbnail mavjud bo'lsa, uni rasmga biriktiramiz va ko'rsatamiz
+            if (thumbnailUrl) {
+                videoThumbnail.src = thumbnailUrl;
+                videoThumbnail.classList.remove("hidden");
+            }
 
             // Step 2: Box 0.5s to'liq ochilgandan so'ng Flask matnini stream (typing) qilamiz
             cardAppearanceTimeout = setTimeout(function () {
                 streamResponse(fullTextFromFlask);
-            }, 500);
+            }, 400);
 
         } catch (error) {
             console.error("Xatolik:", error);
@@ -133,6 +144,8 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
             resultCardBox.classList.add("hidden");
             streamTextContent.textContent = "";
+            videoThumbnail.src = "";
+            videoThumbnail.classList.add("hidden");
         }, 500);
     }
 
@@ -149,10 +162,13 @@ document.addEventListener("DOMContentLoaded", function () {
             if (currentCharIndex < fullText.length) {
                 streamTextContent.textContent += fullText.charAt(currentCharIndex);
                 currentCharIndex++;
+
+                // Matn uzayib ketganda avtomatik pastga scroll qilish
+                resultCardBox.scrollTop = resultCardBox.scrollHeight;
             } else {
                 clearInterval(activeStreamInterval);
             }
-        }, 20); // Matn yozilish tezligi (ms)
+        }, 8); // Matn yozilish tezligi (ms)
     }
 
     // Launch app logic

@@ -225,3 +225,58 @@ body {
 .hidden {
     display: none !important;
 }
+
+/* Natija kartochkasiga max-height va scroll qo'shamiz */
+.result-card {
+    max-height: 500px; /* Ekranda sig'ishi uchun maksimal balandlik */
+    overflow-y: auto;  /* Ma'lumot ko'payganda scroll paydo bo'ladi */
+    padding: 20px;
+    box-sizing: border-box;
+    /* Boshqa mavjud stilingiz shu yerda qoladi... */
+}
+
+/* Thumbnail konteyneri */
+.thumbnail-wrapper {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Thumbnail rasmining o'zi */
+.thumbnail-img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 12px; /* Burchaklari rounded bo'lishi uchun */
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail-img.hidden {
+    display: none;
+}
+
+/* Matn formati saqlanishi uchun (bo'shliqlar va yangi qatolar) */
+.stream-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Chiroyli Custom Scrollbar (Ixtiyoriy, zamonaviy ko'rinish beradi) */
+.result-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.result-card::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.result-card::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.result-card::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
